@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "suse-demo-list-projects-chart.fullname" . }}
+  labels:
+    {{- include "suse-demo-list-projects-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "suse-demo-list-projects-chart.selectorLabels" . | nindent 4 }}

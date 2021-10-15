@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "suse-demo-list-projects-chart.fullname" . }}-test-connection"
+  labels:
+    {{- include "suse-demo-list-projects-chart.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "suse-demo-list-projects-chart.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
